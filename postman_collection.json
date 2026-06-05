@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "AI Genius Backend API",
+    "_postman_id": "a1b2c3d4",
+    "description": "Workflow: Register → Login → Access Protected Route → Refresh Token → Role Authorization",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "http://localhost:5000/api/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\",\n  \"role\": \"Free_User\"\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "http://localhost:5000/api/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Access Free AI Route (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_ACCESS_TOKEN"
+          }
+        ],
+        "url": "http://localhost:5000/api/ai/free-model"
+      }
+    },
+    {
+      "name": "4. Premium Route (Role Test)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_ACCESS_TOKEN"
+          }
+        ],
+        "url": "http://localhost:5000/api/ai/premium-model"
+      }
+    },
+    {
+      "name": "5. Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "http://localhost:5000/api/auth/refresh"
+      }
+    },
+    {
+      "name": "6. Admin Only Route (Forbidden Test)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_ACCESS_TOKEN"
+          }
+        ],
+        "url": "http://localhost:5000/api/ai/purge-cache"
+      }
+    }
+  ]
+}
